@@ -4,5 +4,11 @@
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "json5": "^2.2.3"
+  },
+  "devDependencies": {
+    "@types/ajv": "^0.0.5"
+  }
 }
