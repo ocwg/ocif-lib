@@ -20,7 +20,7 @@ describe('App', () => {
       </BrowserRouter>
     );
     expect(
-      getAllByText(new RegExp('Welcome react-app', 'gi')).length > 0
+      getAllByText(new RegExp('Welcome jsoncanvas-ocif', 'gi')).length > 0
     ).toBeTruthy();
   });
 });

@@ -64,7 +64,8 @@
   "dependencies": {
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-router-dom": "6.29.0"
+    "react-router-dom": "6.29.0",
+    "marked": "^15.0.7"
   },
   "nx": {
     "includedScripts": []

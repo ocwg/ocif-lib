@@ -1,7 +1,7 @@
+import { ocifCoreSchema } from '@ocif/lib';
 import { ErrorObject } from 'ajv';
 import Ajv2020 from 'ajv/dist/2020';
 import JSON5 from 'json5';
-import { ocifCoreSchema } from '../schema/schema';
 
 export interface ValidationError {
   path: string;
@@ -29,21 +29,19 @@ export class ValidationService {
   private getSchemaDetails(error: ErrorObject): string {
     switch (error.keyword) {
       case 'type':
-        return `Expected type: ${error.params['type']}`;
+        return `Expected type: ${error.params.type}`;
       case 'enum':
-        return `Allowed values: ${(
-          error.params['allowedValues'] as string[]
-        ).join(', ')}`;
-      case 'required':
-        return `Required property missing: ${error.params['missingProperty']}`;
-      case 'pattern':
-        return `Should match pattern: ${error.params['pattern']}`;
-      case 'format':
-        return `Should match format: ${error.params['format']}`;
-      case 'const':
-        return `Expected value: ${JSON.stringify(
-          error.params['allowedValue']
+        return `Allowed values: ${(error.params.allowedValues as string[]).join(
+          ', '
         )}`;
+      case 'required':
+        return `Required property missing: ${error.params.missingProperty}`;
+      case 'pattern':
+        return `Should match pattern: ${error.params.pattern}`;
+      case 'format':
+        return `Should match format: ${error.params.format}`;
+      case 'const':
+        return `Expected value: ${JSON.stringify(error.params.allowedValue)}`;
       case 'minimum':
       case 'maximum':
       case 'minLength':

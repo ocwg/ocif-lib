@@ -1,2 +1,4 @@
 export * from './lib/ocif-lib';
-export * from './services/validation-service';
+export * from './types/ocif';
+export * from './schema/schema';
+export * from './types/validation';

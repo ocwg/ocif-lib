@@ -1,12 +1,12 @@
 import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
-import { ocifLib } from '@ocif/lib';
+
 export function App() {
   return (
     <div>
-      <NxWelcome title="react-app" />] <h1>Welcome to react-app!</h1>
-      <p>{ocifLib()}</p>
+      <NxWelcome title="jsoncanvas-ocif" />
+
       {/* START: routes */}
       {/* These routes and navigation have been generated for you */}
       {/* Feel free to move and update them to fit your needs */}

@@ -17,6 +17,7 @@ npx nx add @nx/react
 
 npx nx generate @nx/node:application apps/nodejs-api
 npx nx generate @nx/react:application apps/react-app
+npx nx generate @nx/react:application apps/jsoncanvas-ocif
 
 npx nx generate @nx/js:lib libs/ocif-lib --publishable --importPath="@ocif/lib"
 (use vite and vitest)
