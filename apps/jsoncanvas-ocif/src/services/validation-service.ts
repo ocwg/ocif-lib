@@ -1,8 +1,8 @@
 import { ErrorObject } from 'ajv';
 import Ajv2020 from 'ajv/dist/2020';
 import JSON5 from 'json5';
-import { jsonCanvasSchema } from '../jsoncanvas-schema/schema';
 import { JsonCanvas } from '../types/jsoncanvas';
+import { jsonCanvasSchema } from '../jsoncanvas-schema/schema';
 
 export interface ValidationError {
   path: string;

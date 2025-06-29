@@ -1,166 +1,183 @@
 export const jsonCanvasSchema = {
   $schema: 'https://json-schema.org/draft/2020-12/schema',
-  title: 'OCIF core 0.4',
-  description:
-    'The schema for the Open Component Interconnect Format (OCIF) Core document structure.',
+  $id: 'https://example.com/schemas/jsoncanvas.schema.json',
+  title: 'JSON Canvas',
   type: 'object',
   properties: {
-    ocif: {
-      type: 'string',
-      description: 'The URI of the OCIF schema',
-    },
     nodes: {
       type: 'array',
-      description: 'A list of nodes',
-      items: {
-        $ref: '#/$defs/node',
-      },
+      items: { $ref: '#/$defs/Node' },
     },
-    relations: {
+    edges: {
       type: 'array',
-      description: 'A list of relations',
-      items: {
-        $ref: '#/$defs/relation',
-      },
-    },
-    resources: {
-      type: 'array',
-      description: 'A list of resources',
-      items: {
-        $ref: '#/$defs/resource',
-      },
-    },
-    schemas: {
-      type: 'array',
-      description: 'Declared schemas',
-      items: {
-        $ref: '#/$defs/schema',
-      },
+      items: { $ref: '#/$defs/Edge' },
     },
   },
+  required: [],
+  additionalProperties: false,
+
   $defs: {
-    node: {
+    JsonCanvas: {
       type: 'object',
-      description: 'A node in the OCIF document',
       properties: {
-        id: {
-          type: 'string',
-          description: 'A unique identifier for the node.',
+        nodes: { type: 'array', items: { $ref: '#/$defs/Node' } },
+        edges: { type: 'array', items: { $ref: '#/$defs/Edge' } },
+      },
+      required: [],
+    },
+    CanvasColor: {
+      type: 'string',
+      description: 'Hex color (e.g., #FF0000) or preset color number (1–6)',
+      pattern: '^#[0-9A-Fa-f]{6}$|^[1-6]$',
+    },
+
+    NodeBase: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        type: { type: 'string' },
+        x: { type: 'number' },
+        y: { type: 'number' },
+        width: { type: 'integer' },
+        height: { type: 'integer' },
+        color: { $ref: '#/$defs/CanvasColor' },
+      },
+      required: ['id', 'type', 'x', 'y', 'width', 'height'],
+    },
+
+    TextNode: {
+      allOf: [
+        { $ref: '#/$defs/NodeBase' },
+        {
+          properties: {
+            type: { const: 'text' },
+            text: { type: 'string' },
+            x: { type: 'number' },
+            y: { type: 'number' },
+            width: { type: 'integer' },
+            height: { type: 'integer' },
+          },
+          required: ['text'],
         },
-        position: {
-          type: 'array',
-          description: 'Coordinate as (x,y) or (x,y,z).',
-          items: {
-            type: 'number',
+      ],
+    },
+
+    FileNode: {
+      allOf: [
+        { $ref: '#/$defs/NodeBase' },
+        {
+          properties: {
+            type: { const: 'file' },
+            file: { type: 'string' },
+            subpath: {
+              type: 'string',
+              pattern: '^#.*',
+            },
+            x: { type: 'number' },
+            y: { type: 'number' },
+            width: { type: 'integer' },
+            height: { type: 'integer' },
+          },
+          required: ['file'],
+        },
+      ],
+    },
+
+    LinkNode: {
+      allOf: [
+        { $ref: '#/$defs/NodeBase' },
+        {
+          properties: {
+            type: { const: 'link' },
+            url: { type: 'string' },
+            x: { type: 'number' },
+            y: { type: 'number' },
+            width: { type: 'integer' },
+            height: { type: 'integer' },
+          },
+          required: ['url'],
+        },
+      ],
+    },
+
+    GroupNode: {
+      allOf: [
+        { $ref: '#/$defs/NodeBase' },
+        {
+          properties: {
+            type: { const: 'group' },
+            label: { type: 'string' },
+            background: { type: 'string' },
+            backgroundStyle: {
+              type: 'string',
+              enum: ['cover', 'ratio', 'repeat'],
+            },
+            x: { type: 'number' },
+            y: { type: 'number' },
+            width: { type: 'integer' },
+            height: { type: 'integer' },
           },
         },
-        size: {
-          type: 'array',
-          description: 'The size of the node per dimension.',
-          items: {
-            type: 'number',
+      ],
+    },
+
+    CanvasNode: {
+      allOf: [
+        { $ref: '#/$defs/NodeBase' },
+        {
+          properties: {
+            type: { const: 'nested-canvas' },
+            canvas: { $ref: '#/$defs/JsonCanvas' },
+            x: { type: 'number' },
+            y: { type: 'number' },
+            width: { type: 'integer' },
+            height: { type: 'integer' },
+            title: { type: 'string' },
           },
+          required: ['canvas', 'title'],
         },
-        resource: {
-          type: 'string',
-          description: 'The resource to display',
-        },
-        data: {
-          type: 'array',
-          description: 'Extended node data',
-        },
-        rotation: {
-          type: 'number',
-          description: '+/- 360 degrees',
-        },
-        scale: {
-          type: 'array',
-          description: 'Scale factors to resize nodes',
-          items: {
-            type: 'number',
-          },
-        },
-      },
-      required: ['id'],
+      ],
     },
-    relation: {
-      type: 'object',
-      description: 'A relation between nodes',
-      properties: {
-        id: {
-          type: 'string',
-          description: 'A unique identifier for the relation.',
-        },
-        data: {
-          type: 'array',
-          description: 'Additional data for the relation.',
-        },
-      },
-      required: ['id'],
+
+    Node: {
+      oneOf: [
+        { $ref: '#/$defs/TextNode' },
+        { $ref: '#/$defs/FileNode' },
+        { $ref: '#/$defs/LinkNode' },
+        { $ref: '#/$defs/GroupNode' },
+        { $ref: '#/$defs/CanvasNode' },
+      ],
     },
-    resource: {
+
+    Edge: {
       type: 'object',
-      description: 'A resource in the OCIF document',
       properties: {
-        id: {
+        id: { type: 'string' },
+        fromNode: { type: 'string' },
+        fromSide: {
           type: 'string',
-          description: 'A unique identifier for the resource.',
+          enum: ['top', 'right', 'bottom', 'left'],
         },
-        representations: {
-          type: 'array',
-          description: 'A list of representations of the resource.',
-          items: {
-            $ref: '#/$defs/representation',
-          },
+        fromEnd: {
+          type: 'string',
+          enum: ['none', 'arrow'],
+          default: 'none',
         },
+        toNode: { type: 'string' },
+        toSide: {
+          type: 'string',
+          enum: ['top', 'right', 'bottom', 'left'],
+        },
+        toEnd: {
+          type: 'string',
+          enum: ['none', 'arrow'],
+          default: 'arrow',
+        },
+        color: { $ref: '#/$defs/CanvasColor' },
+        label: { type: 'string' },
       },
-      required: ['id', 'representations'],
-    },
-    representation: {
-      type: 'object',
-      description:
-        'A representation of a resource. Either content or location MUST be present. If content is used, location must be left out and vice versa.',
-      properties: {
-        location: {
-          type: 'string',
-          description:
-            'The storage location for the resource. This can be a relative URI for an external resource or an absolute URI for a remote resource. If a data: URI is used, the content and mime-type properties are implicitly defined already. Values in content and mime-type are ignored.',
-        },
-        'mime-type': {
-          type: 'string',
-          description: 'The IANA MIME Type of the resource.',
-        },
-        content: {
-          type: 'string',
-          description:
-            'The content of the resource. This is the actual data of the resource as a string. Can be base64-encoded.',
-        },
-      },
-    },
-    schema: {
-      type: 'object',
-      description: 'A schema in the OCIF document',
-      properties: {
-        uri: {
-          type: 'string',
-          description:
-            'The URI of the schema, Identifier (and location) of the schema.',
-        },
-        schema: {
-          type: 'object',
-          description: 'The actual JSON schema as a JSON object.',
-        },
-        location: {
-          type: 'string',
-          description: 'The storage location for the schema.',
-        },
-        name: {
-          type: 'string',
-          description: 'An optional short name for the schema.',
-        },
-      },
-      required: ['uri'],
+      required: ['id', 'fromNode', 'toNode'],
+      additionalProperties: false,
     },
   },
-  required: ['ocif'],
 };
