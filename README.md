@@ -2,8 +2,14 @@
 
 ## run apps
 
-npx nx serve apps/react-app
+npx nx serve apps/ocif-tools-app
 npx nx serve apps/nodejs-api
+
+## test apps
+
+    npx nx e2e apps/ocif-tools-app-e2e
+
+with UI : npx nx e2e apps/ocif-tools-app-e2e --ui
 
 ## Installation and project setup for ocif-lib
 
@@ -16,7 +22,7 @@ npx nx add @nx/node
 npx nx add @nx/react
 
 npx nx generate @nx/node:application apps/nodejs-api
-npx nx generate @nx/react:application apps/react-app
+npx nx generate @nx/react:application apps/ocif-tools-app
 npx nx generate @nx/react:application apps/jsoncanvas-ocif
 
 npx nx generate @nx/js:lib libs/ocif-lib --publishable --importPath="@ocif/lib"
