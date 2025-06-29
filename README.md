@@ -5,7 +5,9 @@ OCIF is an interchange file format for canvas-based applications. Visual nodes, 
 ## run apps
 
 npx nx serve apps/ocif-tools-app
+
 npx nx serve apps/jsoncanvas-ocif
+
 npx nx serve apps/nodejs-api
 
 ## test apps (playwright)
