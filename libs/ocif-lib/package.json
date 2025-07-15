@@ -1,14 +1,12 @@
 {
   "name": "@ocif/lib",
   "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
-  "dependencies": {
-    "ajv": "^8.17.1",
-    "json5": "^2.2.3"
-  },
-  "devDependencies": {
-    "@types/ajv": "^0.0.5"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
