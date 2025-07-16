@@ -89,8 +89,16 @@
     },
     "changelog": {
       "workspaceChangelog": {
-        "automaticFromRef": "HEAD",
-        "file": "CHANGELOG.md"
+        "file": false
+      },
+      "projectChangelogs": {
+        "file": false,
+        "renderOptions": {
+          "authors": false,
+          "applyUsernameToAuthors": false,
+          "commitReferences": false,
+          "versionTitleDate": false
+        }
       }
     }
   }
