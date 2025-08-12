@@ -44,7 +44,15 @@ Test application that ensures that the library is compatible with NodeJS.
    npm run serve:nodejs-api
    ```
 
-## Test apps (playwright)
+## Testing
+
+### Library
+
+```bash
+npm run test:ocif-lib
+```
+
+### Apps (playwright)
 
 1. Set up playwright
 

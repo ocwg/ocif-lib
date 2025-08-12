@@ -7,7 +7,8 @@
     "serve:validator": "nx serve apps/ocif-tools-app",
     "serve:jsoncanvas-ocif": "nx serve apps/jsoncanvas-ocif",
     "serve:nodejs-api": "nx serve apps/nodejs-api",
-    "test:playwright": "nx e2e apps/ocif-tools-app-e2e"
+    "test:playwright": "nx e2e apps/ocif-tools-app-e2e",
+    "test:ocif-lib": "nx test ocif-lib"
   },
   "private": true,
   "devDependencies": {
