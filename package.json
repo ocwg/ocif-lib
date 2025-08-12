@@ -2,7 +2,13 @@
   "name": "@ocif-lib/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "nx build libs/ocif-lib",
+    "serve:validator": "nx serve apps/ocif-tools-app",
+    "serve:jsoncanvas-ocif": "nx serve apps/jsoncanvas-ocif",
+    "serve:nodejs-api": "nx serve apps/nodejs-api",
+    "test:playwright": "nx e2e apps/ocif-tools-app-e2e"
+  },
   "private": true,
   "devDependencies": {
     "@eslint/js": "^9.8.0",

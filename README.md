@@ -2,20 +2,58 @@
 
 OCIF is an interchange file format for canvas-based applications. Visual nodes, structural relations, assets, and schemas. This project provides a library and tools to work with OCIF files.
 
-## run apps
+## Install dependencies
 
-npx nx serve apps/ocif-tools-app
+```bash
+npm install
+```
 
-npx nx serve apps/jsoncanvas-ocif
+## Build the library
 
-npx nx serve apps/nodejs-api
+```bash
+npm run build
+```
 
-## test apps (playwright)
+## Utility apps
 
-npx nx e2e apps/ocif-tools-app-e2e
+### Validator
 
-with UI : npx nx e2e apps/ocif-tools-app-e2e --ui
+```bash
+npm run serve:validator
+```
 
-## build library
+### JSONCanvasToOCIF
 
-npx nx build libs/ocif-lib
+```bash
+npm run serve:jsoncanvas-ocif
+```
+
+### NodeJS API
+
+Test application that ensures that the library is compatible with NodeJS.
+
+1. Build the library first!
+
+   ```bash
+   npm run build
+   ```
+
+2. Run the app
+
+   ```bash
+   npm run serve:nodejs-api
+   ```
+
+## Test apps (playwright)
+
+1. Set up playwright
+
+```bash
+npm run playwright:install
+```
+
+2. Run the tests
+
+```bash
+npm run test:playwright
+```
